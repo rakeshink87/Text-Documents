@@ -1,0 +1,340 @@
+What is CI/CD ? What is Jenkins ?
+
+CI/CD --> It is a methodology to develop software automatically.
+Deploy --> Dry run
+
+
+Jenkin Life Cycle
+
+Plan -- Move code to GITHUB/Version Control
+Code -- same as above
+Build --- Maven, Gradle, Ant
+Test -- Junit, Selenium
+Deploy/operate --> Chef, Puppet
+Monitor --> Nagios
+
+Jenkin --> It is a CI tool which integrate all the life cycle of CI/CD.
+
+Other CICD tools also available
+Bamboo --- Paid version
+TravisCI -- paid
+Hudson --- paid
+BuilBot --- Paid availabe 
+Jenkins --- freely available
+
+Key Features:
+It is an open-source.
+It is written in JAVA language.
+Strong community support and have lots of plug-ins supported.
+Jenkins automates the LifeCycle of SDLC (Software Developemnt Life Cycle)
+It was originally developed by SUN Microsystem in 2006 with name Hudson.
+It can run on any platform like Windows, MAC, Unix-like OS.
+
+GIT
+1) download
+2) Install
+3) Configure
+Open the browser --> download GIT --> 64-bit Git for Windows Setup.
+Then Install
+Checkout as-is ,commit Unix-style line endings
+
+git config --global user.name "rakesh"
+git config --global user.email "rakeshink87@gmail.com"
+git --version
+git config --list
+
+GIT configured
+++++++++++++++++++++++++++++++
+
+JAVA
+1) download
+2) Install
+3) Configure
+
+Browser ---> JAVA Development KIT download ---> Download JAVA SE development kit 16 for Windows x64 - jdk-16.0.2_windows-x64_bin
+Run the JDK for installation
+
+Go to C:\Program Files\Java\jdk-16.0.2 --> select the path and copy it.
+
+Windows --> Edit the system environment variables --> Advanced --> Environment Variable --> User variable --> New
+Variable name: JAVA_HOME
+Variable value: C:\Program Files\Java\jdk-16.0.2
+
+Go to System Variable --> New
+Variable name: JAVA_HOME
+Variable value: C:\Program Files\Java\jdk-16.0.2
+
+Go to C:\Program Files\Java\jdk-16.0.2\bin --> copy the path
+Go to System Variable --> Path --> Edit --> paste the path ;C:\Program Files\Java\jdk-16.0.2
+
+To validate
+cmd --> java -version
+echo %JAVA_HOME%
+
+JAVA Configured
+
+++++++++++++++++++++++++++++++++++++++++++
+MAVEN
+
+Download
+Configure
+
+Browser --> search --> maven apache org --> Download --> apache-maven-3.8.6-bin.zip
+
+Create a folder in C:\ with name DevTools
+
+Extract zip file to c:\DevTools
+
+Go to Windows --> Edit the system environment variables --> Advanced --> Environment Variable --> System Variable
+Variable name: M2_HOME
+Variable value: C:\DevTools\apache-maven-3.8.6
+
+Go to C:\ --> DevTools --> apache-mave-3.8.6 --> bin ---> Copy the path
+System Variable --> Path --> Edit --> ;C:\DevTools\apache-maven-3.8.6\bin
+
+To validate
+cmd 
+mvn -version
+echo %M2_HOME%
+
+Maven configured
+
+Reboot the system
++++++++++++++++++++++
+
+Jenkins
+
+Download
+Install
+Configure
+
+
+Browser --> jenkins.io --> Downloads -- Select LTS(long term support) --> Windows ---> Automatically download starts
+
+Run service as LocalSystem
+Run & Install: http://localhost:8080
+
+
++++++++++++++++++++++++++++++++++++++
+
+23/6/2022
+Build Project, Plugin Installation, configure path for JDK/Maven, Scheduled Task
+Build converts codes to Machine-level language format in 0/1 format.
+
+Create project and Build
+NewItem --> mynewproject1 ---> select "Freesystyle Project" ---> Ok
+Build --> Execute Windows Batch Command --> "echo "Namaste"
+click on drop down arrow of that project --> Build 
+Build History /Console output
+
+Copy the project from another project and then build
+NewItem --> mynewproject2 ---> select "Freesystyle Project" ---> Copy from "mynewproject1" --> Save and apply
+
+--------------
+Install Plugins
+Manage Jenkins --> Manage Plugins -->
+
+------------------
+Define the path of Maven/JDK into jenkins
+Manage Jenkins --> Global configuration ---> 
+Maven --> Name: MAVEN --> MAVEN_HOME: C:\DevTools\apache-maven-3.8.6
+
+Manage Jenkins --> Global configuration ---> 
+JDK -->Name: JAVA--> JAVA_HOME: C:\Program Files\Java\jdk-11.0.15
+
+----------
+Scheduled Task
+Click on any project --> Configure --> Build trigger --> select "Build periodically"
+* * * * * 
+(min, hour, day of month, month ,day of week)
+
+
+-----------
+26-06-2022
+
+Topic: Maven Project through Jenkins, Maven Project Build through Maven, Poll SCM, Linked Project
+
+
+Maven Project Build through Maven
+Step:
+Pre-req: MAVEN has to be configured on your system
+Clone the code from GITHUB
+Build the code through MAVEN installed on your system
+
+   50 mkdir class1
+   51  cd class1/
+   52  ls
+   53  git init
+   54  ls -la
+   55  git remote -v
+   56  git remote add origin https://github.com/rakeshink87/jenkins-class.git
+   57  git remote -v
+   58  git clone https://github.com/rakeshink87/jenkins-class.git
+
+cmd --> cd into the direcotry where the code is pulled from GITHUB
+#mvn clean package
+
+------------------------------------------------------
+Maven Project build through Jenkins
+
+Install Plugin on Jenkins
+Update the path of MAVEN in Jenkins.(By default, GIT is automatically updated)
+Create the MAVEN project : New Item --> Mymavenproject --> select MAVEN project --> OK
+Source Code Management: GITHUB repository URL
+Build: Root POM --> pom.xml
+Goals and options: clean package --> Save
+Build the code now
+
+-------------------------------------------------------
+Poll SCM (Source code management)
+It checks for changes done and then builds the request.It is executed on changes only in the codes.
+
+Click on any project --> Configure --> Build trigger --> select "Poll SCM"
+* * * * * 
+(min, hour, day of month, month ,day of week)
+
+
+-----------------------------------------------------------
+Linked Project
+Several job can be linked with each other
+
+After one job is complete, second job will run
+It is of 2 types:
+Upstream Linked Project: Job-A is responsible to trigger Job-B when Job-A is completed.
+Downstream Linked Project: Job-B is responsible to trigger itself when Job-A is completed.
+
+
+
+++++++++++++++++++++++++++++++++
+26-06-2022
+
+Views,User Management, Master-Slave concept
+
+User Management
+
+Manage Jenkins --> Manage Users --> Create user (Manoj)
+
+Assigning privilege
+Manage Jenkins --> Manage Plugins --> "Role base authorization strategy"
+Manage jenkins --> configure Global Security --> Authorization --> "Role based strategy"
+
+Login with Manoj user . Manoj is unable to login
+
+Manage Jenkins --> Manage and Assign Roles --> Manage Roles --> Role to add --> "Emp" ( assign some roles as per the request\requirement)
+Manage Jenkins --> Manage and Assign Roles --> Assign Roles --> User/group to add --> "manoj" --> check the roles of Emp.
+
+Now, try to login with Manoj user. Manoj is able to login with limited privileges.
+---------------
+Master-Slave Concept
+
+Manage Jenkins --> Manage Nodes & clouds --> New node --> "Slave2" --> "Permanent Agent --> crete
+
+Go to the Windows C directory. Create a folder named Slave2 and copy the agent.jar oin it.
+Remote Root directory : c:/Slave2
+Launch Method: Launch agent via execution of command on the controller
+Launch Command: java -jar C:\Slave2\agent.jar
+
+Labelling --> restrict a job to a particular slave(node)
+Manage Jenkins --> Manage Nodes & clouds --> Slave1 --> configure --> Labels: Prefer(any name)
+Go to any job(testjob) --> configure --> Restrict where this project can be run (Genral settings) --> mention the label name "Prefer"
+Now, build the testjob, it automatically goes to Slave1
+
+
++++++++++++++++++++++++++++++++++++++++++++++++
+29 June, 2022
+
+Jenkins installation on Ubuntu, What is Maven and its workingpaint
+
+Maven -- 
+It is a build tool
+It manages dependencies automatically.
+It is a Project Management tool which is coded in JAVA.
+
+.jar --> Java Archive
+.war --> Web Archive
+
+Java Project Structure
+a) Source code
+b) Test Code
+c) Dependencies library
+d) Configuration
+e) Task Runner - Build , Test, Run
+f) Reporting
+
+Ant --> Maven --> Gradle
+
+It is an automation & Project Management tool developed by Apache Software Foundation. It is based on Project Object Model (pom.xml)
+
+It can build any number of projects into desired output such as .jar, .war, metadata.
+
+Mostly used for JAVA projects.
+
+Written in JAVA and released in July,2004.
+
+To download dependency, it is no longer required to visit the official website of each software. It is easily available in mvnrepository.com.
+
+Problem w/o MAven
+
+creating the right project structure.
+Building & deploying the project.
+
+
+Maven helps us to manage
+1) Build
+2) Dependencies
+3) Reports
+
+
+pom.xml ---> It has all the information regarding project and configuration details. It is the main configuration file.
+It contains
+ - Metadata
+ - dependencies
+ - kind of output (.jar, .war)
+ - description
+
+.xml (Extensible Markup Language)
+
+Local Repo -
+Repote Repo - 
+Central Repo
+
+Maven Build Life Cycle
+
+Generate resources (dependecy)
+compile code (source code to ML)
+Package (Build)
+Test
+Deploy
+clean (delete run time files)
+
+# mvn install
+# mvn --version
+# mvn clean package
+
+
+Difference b/w Ant & Maven
+
+Ant --> 
+It is a tool.
+It is mainly used for build.
+
+Maven -->
+It is a framework.
+It is Project Management tool.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
